@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.1.2
+- ⚙️ Added in-app Settings window to adjust idle time threshold (default 4 min)
+- 🔧 Improved logging readability and timestamps
+- 📘 Updated README and release instructions
+
 ## v1.1.1
 - 🪵 Fixed: Logging now uses `Path.home()` to work inside `.app` bundles
 - 📘 Updated: README with automated build/release instructions
