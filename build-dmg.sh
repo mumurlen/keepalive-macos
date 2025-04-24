@@ -4,7 +4,9 @@
 set -e
 
 APP_NAME="KeepAlive"
-APP_VERSION="1.1.0"
+
+# Extract version from keepalive.py
+APP_VERSION=$(grep '__version__' keepalive.py | cut -d '"' -f2)
 DMG_NAME="$APP_NAME-$APP_VERSION.dmg"
 APP_PATH="dist/$APP_NAME.app"
 
@@ -14,7 +16,7 @@ if [ ! -d "$APP_PATH" ]; then
   exit 1
 fi
 
-# Remove any existing DMG
+# Remove any existing DMG with same name
 rm -f "$DMG_NAME"
 
 # Create the DMG
@@ -29,3 +31,4 @@ create-dmg \
   "dist/"
 
 echo "✅ DMG created: $DMG_NAME"
+
