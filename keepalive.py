@@ -11,13 +11,13 @@ __version__ = "1.1.2"
 LOG_FILE = str(Path.home() / "keepalive.log")
 
 def log(msg):
-    with open(LOG_FILE, "a") as f:
+    with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(f"{datetime.datetime.now()} - {msg}\n")
 
 class KeepAliveApp(rumps.App):
     def __init__(self):
         super().__init__("☕", quit_button=None)
-        self.menu = ["Start", "Stop", "Settings", None, "Quit"]
+        self.menu = ["Start", "Stop", "Settings", "View Log", None, "Quit"]
         self.running = False
         self.thread = None
         self.last_day = datetime.datetime.now().day
@@ -94,6 +94,10 @@ class KeepAliveApp(rumps.App):
         if response.clicked and response.text.isdigit():
             self.idle_limit = int(response.text)
             log(f"Idle threshold updated to {self.idle_limit} seconds.")
+
+    @rumps.clicked("View Log")
+    def view_log(self, _):
+        subprocess.run(["open", LOG_FILE])
 
     @rumps.clicked("Quit")
     def quit_app(self, _):
