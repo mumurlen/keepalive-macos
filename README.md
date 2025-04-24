@@ -1,24 +1,23 @@
 # ☕ KeepAlive
 
-A macOS menu bar app that keeps your status active in Microsoft Teams (or similar apps) by simulating harmless background activity. It helps prevent "Away" status during work hours by sending F15 key presses only when the system is idle.
+A macOS menu bar app that keeps your Teams (or Slack, Zoom, etc.) status active by simulating user presence. It prevents idle detection using an invisible F15 keypress and disables system sleep using `caffeinate`.
 
 ---
 
 ## 📦 Features
 
-- ✅ Prevents macOS sleep with `caffeinate`
-- ⏱️ Simulates keypress (F15) if idle for over 4 minutes
-- 📅 Weekday-only schedule: 8:30 AM to 5:30 PM (with small random variation)
-- 🟢 Status icon (🟢☕) shows when running
-- 🪵 Logs to `~/keepalive.log`
-- 💻 Built with `rumps` for macOS menu bar integration
-- 📦 Distributed as a `.app` and optionally `.dmg` installer
+- ✅ Prevents macOS from sleeping
+- ⌨️ Simulates background F15 keypresses when idle > 4 min
+- 🕘 Runs on weekdays 8:30 AM–5:30 PM (with small randomness)
+- 🟢 Status icon (`🟢☕`) indicates running mode
+- 🪵 Logs activity to `~/keepalive.log`
+- 📦 Built with `rumps`, packaged as `.app` and `.dmg`
 
 ---
 
-## 🚀 Getting Started
+## 🛠 How to Build
 
-### 1. Clone and install requirements
+### Clone & install dependencies
 
 ```bash
 git clone git@github.com:mumurlen/keepalive-macos.git
@@ -28,38 +27,50 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### 2. Run the app manually
-
-```bash
-python keepalive.py
-```
-
----
-
-## 📁 Packaging the App
-
-### Build `.app` with py2app:
+### Build `.app` with py2app
 
 ```bash
 python setup.py py2app
 ```
 
-### Create `.dmg` installer (optional)
+Your app will be created in: `dist/KeepAlive.app`
+
+---
+
+## 📦 Create a .dmg Installer
+
+### 1. Install create-dmg (if needed)
+
+```bash
+brew install create-dmg
+```
+
+### 2. Run the script
 
 ```bash
 ./build-dmg.sh
 ```
 
-> Make sure to install `create-dmg` via Homebrew: `brew install create-dmg`
+This creates `KeepAlive-1.1.0.dmg` with drag-to-Applications support.
 
 ---
 
-## 🔐 Permissions
+## 🔐 System Permissions
 
-To simulate keyboard input, grant **Accessibility** permission:
-
+Allow the app to control input:
 > System Settings → Privacy & Security → Accessibility  
-> ✅ Enable for `KeepAlive.app` or your terminal if running it directly
+> ✅ Check `KeepAlive.app` or the terminal you're using
+
+---
+
+## 📄 Version
+
+**Current: 1.1.0**
+
+### Changelog
+
+- **1.1.0** – Added green status icon, DMG support, removed deprecated API
+- **1.0.0** – First release
 
 ---
 
@@ -67,17 +78,4 @@ To simulate keyboard input, grant **Accessibility** permission:
 
 MIT License
 
-> The coffee icon was generated via ChatGPT using a public domain-style prompt. No copyright restrictions.
-
----
-
-## 📌 Version
-
-Current: `v1.1.0`
-
-### Changelog
-
-- **1.1.0** – Added green status icon, removed deprecated Carbon call
-- **1.0.0** – Initial release with keypress + sleep prevention
-
----
+> Coffee icon generated via ChatGPT with a public domain-style prompt. Free for commercial and open-source use.
