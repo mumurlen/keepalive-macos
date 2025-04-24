@@ -1,70 +1,83 @@
 # ☕ KeepAlive
 
-A macOS menu bar app that keeps your status active in Microsoft Teams (or similar apps) by simulating periodic keyboard activity. Designed to run quietly in the background during work hours, it prevents system sleep and triggers fake activity only when idle.
+A macOS menu bar app that keeps your status active in Microsoft Teams (or similar apps) by simulating harmless background activity. It helps prevent "Away" status during work hours by sending F15 key presses only when the system is idle.
 
 ---
 
 ## 📦 Features
 
-- ✅ Prevents macOS from sleeping using `caffeinate`
-- 💤 Simulates invisible keypress (`F15`) only when idle > 4 minutes
-- 📅 Weekday-only schedule from 8:30 AM to 5:30 PM (with slight random variation)
-- 🔄 Green icon indicator (`🟢☕`) when running
-- 🪵 Logs activity and system idle state to `~/keepalive.log`
-- 🧠 Built with `rumps` for a native macOS menu bar experience
+- ✅ Prevents macOS sleep with `caffeinate`
+- ⏱️ Simulates keypress (F15) if idle for over 4 minutes
+- 📅 Weekday-only schedule: 8:30 AM to 5:30 PM (with small random variation)
+- 🟢 Status icon (🟢☕) shows when running
+- 🪵 Logs to `~/keepalive.log`
+- 💻 Built with `rumps` for macOS menu bar integration
+- 📦 Distributed as a `.app` and optionally `.dmg` installer
 
 ---
 
-## 🔧 Requirements
+## 🚀 Getting Started
 
-- macOS Ventura or newer
-- Python 3.8+
-- `rumps` library
-
-Install with:
+### 1. Clone and install requirements
 
 ```bash
+git clone git@github.com:mumurlen/keepalive-macos.git
+cd keepalive-macos
 python3 -m venv .venv
 source .venv/bin/activate
-pip install rumps
+pip install -r requirements.txt
 ```
 
----
-
-## 🚀 How to Run
+### 2. Run the app manually
 
 ```bash
-source .venv/bin/activate
 python keepalive.py
 ```
 
-You’ll see a ☕ icon in your macOS menu bar. When running, it becomes 🟢☕.
+---
+
+## 📁 Packaging the App
+
+### Build `.app` with py2app:
+
+```bash
+python setup.py py2app
+```
+
+### Create `.dmg` installer (optional)
+
+```bash
+./build-dmg.sh
+```
+
+> Make sure to install `create-dmg` via Homebrew: `brew install create-dmg`
 
 ---
 
-## 📄 Version
+## 🔐 Permissions
 
-**Current version: 1.1.0**
+To simulate keyboard input, grant **Accessibility** permission:
+
+> System Settings → Privacy & Security → Accessibility  
+> ✅ Enable for `KeepAlive.app` or your terminal if running it directly
+
+---
+
+## 🧾 License & Attribution
+
+MIT License
+
+> The coffee icon was generated via ChatGPT using a public domain-style prompt. No copyright restrictions.
+
+---
+
+## 📌 Version
+
+Current: `v1.1.0`
 
 ### Changelog
 
-- `v1.1.0`: Added visual menu bar indicator (🟢☕) when running
-- `v1.0.0`: Initial release with idle detection, keypress simulation, and system sleep prevention
+- **1.1.0** – Added green status icon, removed deprecated Carbon call
+- **1.0.0** – Initial release with keypress + sleep prevention
 
 ---
-
-## 📁 File Structure
-
-```
-keepalive/
-├── keepalive.py         # Main script
-├── README.md            # This file
-├── requirements.txt     # Python dependencies
-└── .venv/               # Python virtual environment (optional)
-```
-
----
-
-## 📝 License
-
-MIT 
