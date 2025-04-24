@@ -38,9 +38,19 @@ jobs:
         id: version
         run: echo "VERSION=$(grep '__version__' keepalive.py | cut -d '"' -f2)" >> $GITHUB_OUTPUT
 
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          TAG=${GITHUB_REF##*/}
+          NOTES=$(awk "/^## $TAG/{flag=1;next}/^## /{flag=0}flag" CHANGELOG.md)
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
+          body: ${{ steps.changelog.outputs.notes }}
           files: KeepAlive-${{ steps.version.outputs.VERSION }}.dmg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
