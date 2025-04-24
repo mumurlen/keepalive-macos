@@ -1,6 +1,9 @@
 # keepalive.py - Menu Bar App to Keep Teams Active
 # Author: Mihai (via ChatGPT)
+# Version: 1.1.0
 # Description: macOS menu bar app that prevents system sleep and simulates keypresses
+
+__version__ = "1.1.0"
 
 import rumps
 import subprocess

@@ -1,77 +1,70 @@
 # ☕ KeepAlive
 
-A simple macOS menu bar app that keeps Microsoft Teams (or any activity-based status app) from switching you to "Away" by simulating periodic activity. It uses `rumps` to run a lightweight menu bar app and `caffeinate` to prevent system sleep.
+A macOS menu bar app that keeps your status active in Microsoft Teams (or similar apps) by simulating periodic keyboard activity. Designed to run quietly in the background during work hours, it prevents system sleep and triggers fake activity only when idle.
 
 ---
 
-## 🚀 Features
+## 📦 Features
 
-- 🕒 Simulates activity only during work hours (8:30 AM to 5:30 PM ± random offset)
-- 💤 Triggers only if system has been idle for 4+ minutes
-- 🔐 Sends harmless F15 keypress (invisible)
-- ☕ Prevents system sleep using `caffeinate`
-- 📄 Logs all actions to `~/keepalive.log`
-- 💼 macOS native menu bar interface
-
-## ✅ Updates
- 
-
-- 🟢 **Green dot + coffee cup** (`🟢☕`) when **running**
-- ☕ **Plain coffee cup** when **stopped or idle**
-
-This gives you instant visual feedback in the menu bar.
+- ✅ Prevents macOS from sleeping using `caffeinate`
+- 💤 Simulates invisible keypress (`F15`) only when idle > 4 minutes
+- 📅 Weekday-only schedule from 8:30 AM to 5:30 PM (with slight random variation)
+- 🔄 Green icon indicator (`🟢☕`) when running
+- 🪵 Logs activity and system idle state to `~/keepalive.log`
+- 🧠 Built with `rumps` for a native macOS menu bar experience
 
 ---
 
-## 📦 Requirements
+## 🔧 Requirements
 
-- macOS (tested on Ventura and later)
+- macOS Ventura or newer
 - Python 3.8+
-- [`rumps`](https://github.com/jaredks/rumps)
+- `rumps` library
 
-Install requirements in a virtual environment:
+Install with:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+pip install rumps
 ```
 
 ---
 
-## 🔧 Running the App
+## 🚀 How to Run
 
 ```bash
 source .venv/bin/activate
 python keepalive.py
 ```
 
-☕ A coffee cup will appear in your macOS menu bar. Use it to:
-
-- Start/Stop the simulation
-- View the log file
-- Quit the app
+You’ll see a ☕ icon in your macOS menu bar. When running, it becomes 🟢☕.
 
 ---
 
-## 📁 Project Structure
+## 📄 Version
+
+**Current version: 1.1.0**
+
+### Changelog
+
+- `v1.1.0`: Added visual menu bar indicator (🟢☕) when running
+- `v1.0.0`: Initial release with idle detection, keypress simulation, and system sleep prevention
+
+---
+
+## 📁 File Structure
 
 ```
 keepalive/
-├── keepalive.py         # Main app script
+├── keepalive.py         # Main script
+├── README.md            # This file
 ├── requirements.txt     # Python dependencies
-├── README.md            # You're reading it
-└── .venv/               # Virtual environment (excluded in .gitignore)
+└── .venv/               # Python virtual environment (optional)
 ```
-
----
-
-## 🛑 Quitting the App
-
-Use the menu bar → Quit option. The app shuts down cleanly and stops all background threads and sleep prevention.
 
 ---
 
 ## 📝 License
 
-MIT License 
+MIT 
