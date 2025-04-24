@@ -1,0 +1,46 @@
+name: Build and Release KeepAlive
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python3 -m venv .venv
+          source .venv/bin/activate
+          pip install -U pip setuptools wheel py2app rumps
+
+      - name: Build .app with py2app
+        run: |
+          source .venv/bin/activate
+          python setup.py py2app
+
+      - name: Generate .dmg
+        run: |
+          brew install create-dmg
+          chmod +x build-dmg.sh
+          ./build-dmg.sh
+
+      - name: Extract version
+        id: version
+        run: echo "VERSION=$(grep '__version__' keepalive.py | cut -d '"' -f2)" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: KeepAlive-${{ steps.version.outputs.VERSION }}.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
