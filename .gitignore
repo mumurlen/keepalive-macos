@@ -1,2 +1,21 @@
-__pycache__/
+# Virtualenv
 .venv/
+
+# py2app build artifacts
+build/
+dist/
+*.app
+
+# Installer images
+*.dmg
+
+# Iconset folder (not needed in repo)
+*.iconset/
+
+# macOS metadata
+.DS_Store
+
+# Python bytecode
+__pycache__/
+*.pyc
+
