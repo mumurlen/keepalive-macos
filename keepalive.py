@@ -17,7 +17,9 @@ class KeepAliveApp(rumps.App):
     def __init__(self):
         # Initialize the menu bar app with a coffee emoji and remove default quit
         super(KeepAliveApp, self).__init__("☕", quit_button=None)
-        self.title = "☕"  # Menu bar icon
+        self.default_title = "☕"        # Inactive/default icon
+        self.running_title = "🟢☕"      # Running icon
+        self.title = self.default_title
 
         # Runtime state variables
         self.running = False
@@ -114,6 +116,7 @@ class KeepAliveApp(rumps.App):
     def start(self, _):
         if not self.running:
             self.running = True
+            self.title = self.running_title
             self.start_caffeinate()
             self.thread = threading.Thread(target=self.run_loop, daemon=True)
             self.thread.start()
@@ -123,6 +126,7 @@ class KeepAliveApp(rumps.App):
     def stop(self, _):
         if self.running:
             self.running = False
+            self.title = self.default_title
             self.stop_caffeinate()
             self.log("Stopped KeepAlive.")
 
@@ -133,6 +137,7 @@ class KeepAliveApp(rumps.App):
     # Clean shutdown via menu Quit item
     def quit_app(self, _):
         self.running = False
+        self.title = self.default_title
         self.stop_caffeinate()
         self.log("Quitting KeepAlive.")
         rumps.quit_application()

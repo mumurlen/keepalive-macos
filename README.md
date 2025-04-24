@@ -13,6 +13,14 @@ A simple macOS menu bar app that keeps Microsoft Teams (or any activity-based st
 - 📄 Logs all actions to `~/keepalive.log`
 - 💼 macOS native menu bar interface
 
+## ✅ Updates
+ 
+
+- 🟢 **Green dot + coffee cup** (`🟢☕`) when **running**
+- ☕ **Plain coffee cup** when **stopped or idle**
+
+This gives you instant visual feedback in the menu bar.
+
 ---
 
 ## 📦 Requirements
