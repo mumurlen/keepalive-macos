@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.3
+- 🧹 Added daily pruning of `keepalive.log` to avoid long-term bloat
+- 🔁 Minor internal cleanup and log rotation logic
+
 ## v1.1.2
 - ⚙️ Added in-app Settings window to adjust idle time threshold (default 4 min)
 - 🔧 Improved logging readability and timestamps

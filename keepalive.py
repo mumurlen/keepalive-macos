@@ -6,7 +6,7 @@ import threading
 import random
 from pathlib import Path
 
-__version__ = "1.1.2"
+__version__ = "1.1.3"
 
 LOG_FILE = str(Path.home() / "keepalive.log")
 
@@ -23,7 +23,7 @@ class KeepAliveApp(rumps.App):
         self.last_day = datetime.datetime.now().day
         self.start_variation = random.randint(-10, 10)
         self.end_variation = random.randint(-10, 10)
-        self.idle_limit = 240  # default 4 minutes
+        self.idle_limit = 240
 
     def simulate_key(self):
         try:
@@ -45,6 +45,13 @@ class KeepAliveApp(rumps.App):
     def run_loop(self):
         while self.running:
             now = datetime.datetime.now()
+            log_path = Path(LOG_FILE)
+            if log_path.exists():
+                mtime = datetime.datetime.fromtimestamp(log_path.stat().st_mtime)
+                if (now - mtime).days >= 1:
+                    log("Log file older than 1 day — rotating.")
+                    log_path.write_text("", encoding="utf-8")
+
             if now.day != self.last_day:
                 self.last_day = now.day
                 self.start_variation = random.randint(-10, 10)
